@@ -1,0 +1,13 @@
+ <div class=" widget_archive widget widget__sidebar">
+                                <h3 class="widget-title">Анонсы</h3>
+                                <div class="widget-content">
+                                   
+                                                                        
+
+                                   {% for item in announcements %}
+                                      <h5><a href="{{item.get_absolute_url}}">{{item.date}}</a></h5>{{item.text|safe}}
+                                   {% endfor %}
+                                       
+                                  
+                                </div>
+                            </div>        

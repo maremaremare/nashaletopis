@@ -1,0 +1,21 @@
+            <div class="header-top">
+                <div class="container">
+                    <div class="header-top-left">
+                        <ul class="header-top-nav" style="padding-top:6px">
+                            <li><a href="/">Начало</a></li>
+                            {% if main.is_hotline_shown %}
+                                 <li><a href="#">Телефон горячей линии: {{main.hotline}}</a></li>
+                            {% endif %}
+                            <li><a href="/help" style="color:red">Хочу помочь!</a></li>
+                            <li><a href="/aboutus">О проекте</a></li>
+                            <li><a href="#footer">Контакты</a></li>
+                        </ul>
+                    </div>
+                    <div class="header-top-right">
+                       <div class="yashare-auto-init" data-yashareL10n="ru"
+ data-yashareQuickServices="yaru,vkontakte,facebook,twitter,gplus" data-yashareTheme="counter"
+
+></div>
+                    </div>
+                </div>
+            </div>

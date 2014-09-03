@@ -1,0 +1,129 @@
+{% extends "pagewithsidebar.html" %}
+{% block content %}
+<article class="entry entry__standard ">
+                        
+                                <header class="entry-header">
+                                   <h2>{{object.name}}</h2>
+                                     
+                    <div class="entry-meta">
+                        {% if periods %}
+                        <span class="entry-comments">
+                            {% for location in object.location.all %}
+                            <a href="/stories/{% if not periods %}active/{% endif %}location/{{location.id}}">{{location.title}}</a> <a href="/stories/{% if not periods %}active/{% endif %}location/{{location.parent.id}}">({{location.parent.title}})</a>{% if not forloop.last %},{% endif %} {% endfor %}
+                        </span>
+                        <span class="entry-comments">
+{% for  p in object.period.all %}
+     <a href="/stories/period/{{p.slug}}/">{{p.name}}</a>{% if not forloop.last %},{% endif %}
+{% endfor %}
+                        </span>
+                        {% else %}
+                        <span class="entry-comments">
+                            <a href="/stories/active/location/{{object.location.id}}">{{object.location.title}}</a>
+                            <a href="/stories/{% if not periods %}active/{% endif %}location/{{location.parent.id}}">({{location.parent.title}})</a>
+                        </span>
+
+                        {% endif %}
+                        {% if object.radioprogram %}
+                        <span class="entry-comments">
+                            <a href="{{object.radioprogram.get_absolute_url}}">Перейти к радиопрограмме</a>
+                        </span>
+                        {% endif %}
+                          </div>
+                                 {% if object.tags.all|length %}
+                                 <div class="entry-meta">
+                                
+                        <span >метки: 
+                        {% for tag in object.tags.all %}
+                            
+                        
+                            <a href="/stories/{% if not period %}active/{% endif %}tags/{{tag.slug}}">{{tag.name}}</a>
+                            {% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                        </span>
+                        </div>
+                        {% endif %}
+
+                  
+                </header>
+                                </header>
+
+                                {% if object.is_photo_shown %}
+                                                                    <figure class="alignleft">
+                                    <a href="#"><img src="{% with object.photos.all|first as coverphoto  %}
+  {{coverphoto.storydetail_thumbnail.url}}
+{% endwith %}" alt=""></a>
+                                </figure>
+                                {% endif %}
+
+                                <div class="entry-content">
+
+                                   {{object.text|safe}}
+
+
+                                </div><hr><h3>Поделиться</h3>
+                                                                                                 <div class="yashare-auto-init" data-yashareL10n="ru"
+ data-yashareQuickServices="yaru,vkontakte,facebook,twitter,gplus" data-yashareTheme="counter"
+
+></div> 
+<hr>
+{% if object.audio %}
+<h3>Аудио</h3>
+       <figure class="alignleft audio-holder">
+                                    <audio controls="" preload="none" width="640" height="30" src="{{object.audio.url}}"></audio>
+                                   
+                                </figure>
+                                <a class="audiodownload" href="{{object.audio.url}}" download="{{object.audio.url}}">Скачать аудио</a>
+
+                                <hr>
+{% endif %}
+{% if object.photos.all|length > 1 %}
+<h3>Фото</h3>
+                            <div class="owl-carousel owl-theme owl-slider thumbnail">
+                            {% for photo in object.photos.all %}
+                                    <div class="item">
+                                        <img src="{{photo.gallery_thumbnail.url}}" alt="">
+                                    </div>  
+                            {% endfor %}
+
+
+                                </div>
+                                <hr>
+    
+{% endif %}
+{% if object.videos.all|length > 1 %}
+    <h3>Видео</h3>
+    {% load embed_video_tags %}
+{% for vid in object.videos.all %}
+    <figure class="alignnone video-holder">
+    
+
+                                    {% video vid.video '800x600' %}
+                                </figure>
+                                <hr>
+                               
+{% endfor %}
+
+
+{% endif %}
+
+
+                            </article>
+{% endblock content %}
+
+{% block sidebar %}
+{% load mptt_tags %} 
+{% if periods %}
+    {% include "periods.html" %}
+{% endif %}
+
+
+{% include "regions.html" %}  
+{% include "tags.html" %}                    
+{% endblock sidebar %}
+
+{% load my %}
+{% set title %}{{object.name}} рассказывает о своей жизни. {% endset %}
+{% set keywords %}{{object.name}}{% endset %}
+{% set image %}{% with object.photos.all|first as coverphoto  %}
+  {{coverphoto.storydetail_thumbnail.url}}
+{% endwith %}{% endset %}

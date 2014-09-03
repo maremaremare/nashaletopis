@@ -1,0 +1,25 @@
+<ymaps:ymaps xmlns:ymaps="http://maps.yandex.ru/ymaps/1.x" xmlns:repr="http://maps.yandex.ru/representation/1.x" xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maps.yandex.ru/schemas/ymaps/1.x/ymaps.xsd">
+<ymaps:GeoObjectCollection>
+<gml:name>Совсем другая карта</gml:name>
+<gml:featureMembers>
+{% for item in helpgiven %} 
+<ymaps:GeoObject>
+<gml:name>{{item.title|striptags}}</gml:name>
+<gml:description>description</gml:description>
+<gml:Point>
+<gml:pos>{{item.location.get_coords}}</gml:pos>
+</gml:Point>
+</ymaps:GeoObject>
+ {% endfor %}
+ {% for item in helpneeded %} 
+<ymaps:GeoObject>
+<gml:name>{{item.title|striptags}}</gml:name>
+<gml:description>description</gml:description>
+<gml:Point>
+<gml:pos>{{item.location.get_coords}}</gml:pos>
+</gml:Point>
+</ymaps:GeoObject>
+ {% endfor %}
+ </gml:featureMembers>
+</ymaps:GeoObjectCollection>
+</ymaps:ymaps>

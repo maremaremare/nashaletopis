@@ -1,0 +1,23 @@
+{% load sitetree %}
+<ul class = "flexnav" data-breakpoint="992">
+ {% with sitetree_page_title as page_title %}
+    {% for item in sitetree_items %}
+   
+        
+   
+    <li {% if item.title_resolved == page_title  %}
+        class="active"
+    {% endif %}>
+        <a href="{% sitetree_url for item %}">{{ item.title_resolved }}</a>
+        {% if item.has_children %}
+            {% sitetree_children of item for menu template "mainmenuchildren.html" %}
+        {% endif %}
+    </li>
+    {% endfor %}
+
+     {% endwith %}
+</ul>
+
+
+                     
+     

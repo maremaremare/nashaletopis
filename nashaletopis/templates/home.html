@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+{% block main %}
+{% load my %}
+<div class="logoborder">
+    <div class="alignnone logowrap">
+        <div class="mylogo"><a href="http://timchenkofoundation.org"><img src="{{ STATIC_URL }}images/fond.svg" class="tfond"></a><h1>{{main.title}}</h1><br><h2>{{main.subtitle}}</h2></div></div></div>
+        <!-- Page Content -->
+        <section >
+            
+            <div class="container">
+                <section class="featured-section " data-stellar-ratio="2" data-stellar-background-ratio="0.5" style="background-position: 0px -155.75px;">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="featured-item">
+                                <a href="http://starikam.ru" class="featured-link">
+                                <div class="featured-desc">
+                                    <h5 class="featured-subtitle">Благотворительный Фонд</h5>
+                                    
+                                </div>
+                                <div class="featured-main">
+                                    <span class="featured-icon">
+                                    <img width="40" src="{{ STATIC_URL }}images/sun.svg">
+                                    </span>
+                                    <h3 class="featured-title">Старость в Радость</h3>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="featured-item">
+                                <a href="http://vk.com/club50238916" class="featured-link">
+                                <div class="featured-desc">
+                                    <h5 class="featured-subtitle">Благотворительный проект</h5>
+                                    
+                                </div>
+                                <div class="featured-main">
+                                    <span class="featured-icon">
+                                    <img width="40" src="{{ STATIC_URL }}images/bab1.svg">
+                                    </span>
+                                    <h3 class="featured-title">Мы помогаем</h3>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="featured-item">
+                                <a href="http://admil.ru" class="featured-link">
+                                <div class="featured-desc">
+                                    <h5 class="featured-subtitle">Благотворительное общество</h5>
+                                    
+                                </div>
+                                <div class="featured-main">
+                                    <span class="featured-icon">
+                                    <img width="40" src="{{ STATIC_URL }}images/admil.svg">
+                                    </span>
+                                    <h3 class="featured-title">Адреса милосердия</h3>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="featured-item">
+                                <a href="#" class="featured-link">
+                                <div class="featured-desc">
+                                    <h5 class="featured-subtitle">Автономная некоммерческая организация</h5>
+                                    
+                                </div>
+                                <div class="featured-main">
+                                    <span class="featured-icon">
+                                    <img width="40" src="{{ STATIC_URL }}images/dialog.svg">
+                                    </span>
+                                    <h3 class="featured-title">Студио-Диалог</h3>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="spacer-lg visible-sm visible-xs"></div>
+                        <div class="title-accent">
+                            <h3> <span>О проекте</span> </h3>
+                        </div>
+                 
+                        <p>
+                        {{main.our_mission|striptags|nbsp|truncatechars:"895"}}</p>
+                        
+                        <a href="/aboutus" class="btn btn-primary" style="margin-top:8px">Узнать больше</a>
+                       
+                    </div>
+                    <div class="col-md-4">
+                    <div class="spacer-lg visible-sm visible-xs"></div>
+                        <div class="title-accent">
+                            <h3> <span>Как нам можно помочь</span></h3>
+                        </div>
+                        {% for item in helpus %}
+                        <div class="icon-box circled sm bordered icon-box-animated animation fadeInUp animation-visible" data-animation="fadeInUp" data-animation-delay="200" style="-webkit-animation: 200ms 200ms;">
+                            <div class="icon">
+                                <a href="{{item.get_absolute_url}}"> <i class="fa  fa-{{item.icon}}"></i></a>
+                            </div>
+                            <div class="icon-box-body">
+                                <h4><a href="{{item.get_absolute_url}}">{{item.title}}</a></h4>
+                                {{item.description}}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+                        
+                        <a href="/help/" class="btn btn-primary">Как еще помочь</a>
+                        
+                    </div>
+                    <div class="col-md-4">
+                        <div class="spacer-lg visible-sm visible-xs"></div>
+                        <div class="title-accent">
+                            <h3><span>наши программы на Радио России</span> </h3>
+                        </div>
+                        <!-- Widget :: Latest Posts -->
+                        <div class="latest-posts-widget widget">
+                            <div class="widget-content">
+                                <ul class="latest-posts-list">
+                                    {% for item in latest_radio|slice:"5" %}
+                                    <li>
+                                        
+                                        <span class="date">{{ item.date }}</span>
+                                        <span><a href="{{item.get_absolute_url}}">{{ item.text|striptags|no_dumb_chars|truncatewords:10 }}</a></span>
+                                    </li>
+                                    {% endfor %}
+                                    
+                                    
+                                </ul>
+                                <br><br>
+                                <a href="/radio" class="btn btn-primary" style="margin-top:16px">Смотреть все</a>
+                            </div>
+                        </div>
+                        <!-- /Widget :: Latest Posts -->
+                    </div>
+                    
+                </div>
+                {% if main.are_latest_stories_shown %}
+                <section class="section-dark animation fadeInUp animation-visible" data-animation="fadeInUp">
+                    
+                    
+                    <div class="row">
+                        <div id="owl-carousel" class="owl-carousel owl-theme">
+                            
+                            {% for item in latest_stories|slice:":8" %}
+                            <div class="owl-item"><div class="project-item">
+                                <div class="project-item-inner">
+                                    <figure class="alignnone project-img">
+                                        <img src="{% with item.photos.all|first as coverphoto  %}{{coverphoto.homepage_thumbnail.url}}{% endwith %}" alt="">
+                                        
+                                    </figure>
+                                    
+                                    <div class="project-desc">
+                                        <h4 class="title"><a href="{{item.get_absolute_url}}">{{ item.name }}</a></h4>
+                                        <span class="desc">{{ item.text|striptags|nbsp|truncatechars:300}}</span>
+                                    </div>
+                                </div>
+                            </div></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+                {% endif %}
+                {% if main.is_photoalbum_shown %}
+                
+                
+                <div class="portfolio-sidebar-bottom">
+                    <div class="title-accent">
+                        <h3><span>История в лицах</span></h3>
+                    </div>
+                    <!-- Projects -->
+                    <div class="container">
+                        
+                        <div class="clearfix">
+                            <!-- Project Feed Filter -->
+                            <ul class="project-feed-filter">
+                                <li><a href="#" class="btn btn-sm btn-default btn-primary" data-filter="*">Всё</a></li>
+                                {% for period in periods %}
+                                <li><a href="#" class="btn btn-sm btn-default" data-filter=".{{period.slug}}">{{period.name}}</a></li>
+                                {% endfor %}
+                                
+                            </ul>
+                            <!-- Project Feed Filter / End -->
+                        </div>
+                    </div>
+                    <!-- Project Feed -->
+                    <div class="project-feed project-feed__fullw isotope" >
+                        {% for item in latest_stories|shuffle|slice:":15" %}
+                        <div class="project-item {% for p in item.period.all %}{{p.slug}}{% endfor %} isotope-item" style="-webkit-transform: translate(0px, 0px); position: absolute; left: 0px; top: 0px; height:229px">
+                            <div class="project-item-inner">
+                                <a href="{{item.get_absolute_url}}"> <figure class="alignnone project-img">
+                                    <img src="{% with item.photos.all|first as coverphoto  %}
+                                    {{coverphoto.photoalbum_thumbnail.url}}
+                                    {% endwith %}" alt="">
+
+
+                                                    <div class="caption">
+                    <div class="blur"></div>
+                    <div class="caption-text">
+                        <h1>{{item.name}}</h1>
+                  
+                    </div>
+                </div>
+                                </figure></a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+                        
+                    </div>
+                    <!-- Project Feed / End -->
+                    <!-- Projects / End -->
+                </div>
+                
+                <hr class="lg">
+                {% endif %}
+                {% if main.is_map_shown %}
+                
+                <section>
+                    <div class="title-accent">
+                        <h3><span>Карта помощи</span></h3>
+                    </div>
+                    <div id="map" class="mbot30" style="width:100%; height:350px"></div>
+                </section>
+                {% endif %}
+                {% if main.is_hotline_shown %}
+                
+                <section><hr>
+                    <h1 class="callcenter">Телефон горячей линии: {{main.hotline}}</h1>
+                <hr></section>
+                {% endif %}
+            </div>
+        </section>
+        <!-- Page Content / End -->
+        {% endblock main %}
+        {% block customjs %}
+        {% if main.is_map_shown %}
+        {% include "mapjs.html" %}
+        {% endif %}
+        {% endblock customjs %}
+
+
+        {% set image %}{{ STATIC_URL }}images/apple-touch-icon-144x144.png{% endset %}
+        {% set title %}{% endset %}

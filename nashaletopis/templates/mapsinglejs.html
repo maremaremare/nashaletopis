@@ -1,0 +1,33 @@
+<script src="//api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+<script type="text/javascript">
+var myMap;
+
+// Дождёмся загрузки API и готовности DOM.
+ymaps.ready(init);
+
+function init () {
+    // Создание экземпляра карты и его привязка к контейнеру с
+    // заданным id ("map").
+    myMap = new ymaps.Map('map', {
+        // При инициализации карты обязательно нужно указать
+        // её центр и коэффициент масштабирования.
+        center: [{{object.location.address}}], 
+        zoom: 6,
+        controls: ['zoomControl'],
+        mode: 'debug', 
+    });
+myMap.behaviors.disable('scrollZoom');
+ myMap.geoObjects
+
+             .add(new ymaps.Placemark([{{object.location.address}}], {
+            balloonContent: '<div><strong>{{object.title|striptags}}</strong></div><div>{{object.text|truncatewords:"10"|striptags}}</div><a href="{{object.get_absolute_url}}">Подробнее...</a>'
+        }, {
+            preset: 'islands#icon',
+            iconColor: '{% if not object.opened %}green{% else %}{{color}}{% endif %}'
+        }))
+
+        
+}
+
+
+</script>

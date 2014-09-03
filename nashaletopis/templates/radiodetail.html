@@ -1,0 +1,59 @@
+{% extends "pagewithsidebar.html" %}
+{% block content %}
+<article class="entry entry__standard ">
+                        
+                                <header class="entry-header">
+                                   <h2>{{object.date}}</h2>
+                                     
+                  <div class="entry-meta">
+
+                       
+
+                        Категория: <a href="{{object.category.get_absolute_url}}">{{object.category.title}}</a>
+                    {% if object.participants %}
+                      
+           
+                         <br>    
+             Участники: {% for person in object.story_set.all %}
+                 <a href="{{person.get_absolute_url}}">{{person.name}}</a>{% if not forloop.last %},{% endif %}
+             {% endfor %}
+         {% endif %}
+
+                    </div>
+                </header>
+                                </header>
+                          
+                                <div class="entry-content">
+                                   {{object.text|safe}}
+                                </div>
+                                <hr>
+<h3>Аудио</h3>
+    <figure class="alignleft audio-holder">
+                                    <audio controls="" preload="none" width="640" height="30" src="{{object.audio.url}}"></audio>
+                                   
+                                </figure>
+                                   <a class="audiodownload" href="{{object.audio.url}}" download="{{object.audio.url}}">Скачать аудио</a>
+
+{% if object.fulltext %}
+  <h3>Полный текст передачи</h3>
+  <div class="entry-content">
+                                   {{object.fulltext|safe}}
+                                </div>
+{% endif %}
+<hr><h3>Поделиться</h3>
+                                                                                                 <div class="yashare-auto-init" data-yashareL10n="ru"
+ data-yashareQuickServices="yaru,vkontakte,facebook,twitter,gplus" data-yashareTheme="counter"
+
+></div> 
+
+                            </article>
+{% endblock content %}
+
+{% block sidebar %}
+          {% include "categories.html" %} {% include "radioannounces.html" %}             
+{% endblock sidebar %}
+
+
+{% load my %}
+{% set title %}Радиопередача "{{object.category.title}}" от {{object.date}} {% endset %}
+{% set keywords %}{{object.category.title}}{% endset %}

@@ -1,0 +1,138 @@
+
+            <!-- Footer -->
+            <footer class="footer" id="footer">
+                <div class="footer-widgets">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3">
+                                <!-- Widget :: Latest Posts -->
+                                <div class="latest-posts-widget widget widget__footer">
+                                    <h3 class="widget-title">Анонсы радиопередач</h3>
+                                    <div class="widget-content">
+                                        <ul class="latest-posts-list">
+                                              {% load my %}
+                                                {% for item in radio_a %}
+                                                <li>
+                                                    <span class="date">{{item.date}}</span>
+                                                <span class="titleradio">{{item.text|striptags|no_dumb_chars|truncatewords:20}} <a href="/radio">Дальше...</a></span>
+                                                 </li>
+                                                {% endfor %}
+                                                
+                                           
+                                           
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /Widget :: Latest Posts -->
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <!-- Widget :: Contacts Info -->
+                                <div class="contacts-widget widget widget__footer">
+                                    <h3 class="widget-title">Свяжитесь с нами</h3>
+                                    <div class="widget-content">
+                                        <ul class="contacts-info-list">
+                                            <li>
+                                                <i class="fa fa-map-marker"></i>
+                                                <div class="info-item">
+                                                    {{ main.address }}
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-phone"></i>
+                                                <div class="info-item">
+                                                   {{main.phone}}
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-envelope"></i>
+                                                <span class="info-item">
+                                                    <a href="mailto:{{main.email}}">{{main.email}}</a>
+                                                </span>
+                                            </li>
+                                            {% if main.skype %}
+                                                                    <li>
+                                                <i class="fa fa-skype"></i>
+                                                <div class="info-item">
+                                                    {{main.skype}}
+                                                </div>
+                                            </li>
+                                            {% endif %}
+                        
+            
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /Widget :: Contacts Info -->
+                            </div>
+
+                            <div class="clearfix visible-sm"></div>
+
+                            <div class="col-sm-6 col-md-3">
+                                <!-- Widget :: Categories -->
+                                <div class="widget_categories widget widget__footer">
+                                  <!--  <h3 class="widget-title">Categories</h3>-->
+                                    <div class="widget-content">
+                     {% load sitetree %}
+                                           {% sitetree_menu from "mainmenu" include "menu" template "mainmenufooter.html" %}
+                                    </div>
+                                </div>
+                                <!-- /Widget :: Categories -->
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <!-- Widget :: Flickr -->
+                                <div class="widget_flickr widget widget__footer">
+                                    
+                                    <div class="widget-content">
+                                        <!-- Flickr images will appear here -->
+                                        
+                                        {% for item in faces %}
+                                            <figure class="thumbnail"><a href="{{item.get_absolute_url}}"><img src="{% with item.photos.all|first as coverphoto  %}
+  {{coverphoto.footer_thumbnail.url}}
+{% endwith %}" alt="{{item.title}}"></a></figure>
+                                        {% endfor %}
+                                       
+                                    </div>
+                                </div>
+                                <!-- /Widget :: Flickr -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-copyright">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-4">
+                                Copyright &copy; 2014  <a href="index.html">Наша летопись</a> &nbsp;| &nbsp;Все права защищены
+                            </div>
+                            {% if main.is_social_shown %}
+                            <div class="col-sm-6 col-md-8">
+                                <div class="social-links-wrapper">
+                                    <span class="social-links-txt">Мы в социальных сетях</span>
+                                    <ul class="social-links social-links__dark">
+                                    {% if main.facebook %}
+                                        <li><a href="{{main.facebook}}"><i class="fa fa-facebook"></i></a></li>
+                                    {% endif %}
+                                    {% if main.vkontakte %}
+                                        <li><a href="{{main.vkontakte}}"><i class="fa fa-vk"></i></a></li>
+                                    {% endif %}
+                                    {% if main.twitter %}
+                                        <li><a href="{{main.twitter}}"><i class="fa fa-twitter"></i></a></li>
+                                    {% endif %}
+                                    {% if main.livejournal %}
+                                        <li><a href="{{main.livejournal}}"><i class="fa fa-pencil"></i></a></li>
+                                    {% endif %}
+                                    {% if main.instagram %}
+                                         <li><a href="{{main.instagram}}"><i class="fa fa-instagram"></i></a></li>   
+                                    {% endif %}
+                                        
+                                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- Footer / End -->

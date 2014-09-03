@@ -1,0 +1,14 @@
+    
+
+
+{% load sitetree %}
+<ul>
+    {% for item in sitetree_items %}
+    <li >
+        <a href="{% sitetree_url for item %}">{{ item.title_resolved }}</a>
+        {% if item.has_children %}
+            {% sitetree_children of item for menu template "mainmenuchildren.html" %}
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>

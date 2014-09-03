@@ -1,0 +1,30 @@
+{% extends "pagewide.html" %}
+{% block content %}
+
+{{main.our_mission|safe}}
+<hr>
+
+
+<ul class="team-list row">
+{% for person in object_list %}
+                        <li class="team-item col-md-3">
+                            <figure class="alignnone">
+                                <a href="page-team-member.html"><img src="{{person.thumbnail.url}}" alt=""></a>
+                            </figure>
+                            <header class="team-head">
+                                <span class="team-head-info">{{person.job}}</span>
+                                <h4 class="team-name">   {{person.name}}</h4>
+                   
+                            </header>
+                            <div class="team-excerpt">
+                               {{person.about|safe}}
+                            </div>
+                        </li>
+  {% endfor %}
+                    </ul>
+
+
+ 
+
+
+{% endblock content %}

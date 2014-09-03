@@ -1,0 +1,26 @@
+   <div class="widget_categories widget widget__sidebar">
+                                <h3 class="widget-title">По периодам истории</h3>
+                                <div class="widget-content">
+                                    <ul>
+                                    {% load mptt_tags %}
+                                        {% recursetree periods %}
+
+                                            
+              {% if node.o_count %}
+                                                                   
+                                                                                                             
+        <li>
+         <a href="{{node.get_absolute_url}}">{{ node.name }}</a> ({{node.o_count}})
+            {% if not node.is_leaf_node %}
+                <ul class="children">
+                    {{ children }}
+                </ul>
+            {% endif %}
+        </li>
+        {% endif %}   
+    {% endrecursetree %}
+                                   
+                                        {# <li><a href="#">{{period.name}}</a> (3)</li> #}
+                                    </ul>
+                                </div>
+                            </div>

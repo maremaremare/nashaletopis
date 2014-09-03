@@ -1,0 +1,13 @@
+ <div class="widget_categories widget widget__sidebar">
+                                <h3 class="widget-title">{{categories_title}}</h3>
+                                <div class="widget-content">
+                                    <ul>
+                                                                        
+
+                                   {% for item in categories %}
+                                       <li><a href="{{item.get_absolute_url}}">{{item.title}}</a></li>
+                                   {% endfor %}
+                                       
+                                    </ul>
+                                </div>
+                            </div>        

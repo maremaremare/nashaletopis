@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+    {% block main %}
+        
+{% include "header.html" %}
+
+            <!-- Page Content -->
+            <section class="page-content">
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-md-9 col-md-push-3  ">
+                        {% block content %}
+                            
+                        {% endblock content %}
+                        </div>
+
+                        <aside class="sidebar col-md-pull-9 col-md-3 ">
+                            
+                        {% block sidebar %}
+                            
+                        {% endblock sidebar %}
+                        </aside>
+                    </div>
+
+                </div>
+            </section>
+            <!-- Page Content / End -->
+
+          {% endblock main %}
+
+          {% block customjs %}
+              
+          {% endblock customjs %}

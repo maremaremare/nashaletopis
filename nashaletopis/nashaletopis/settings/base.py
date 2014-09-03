@@ -5,8 +5,7 @@ from os.path import abspath, basename, dirname, join, normpath
 from sys import path
 
 
-
-########## PATH CONFIGURATION
+# PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory:
 DJANGO_ROOT = dirname(dirname(abspath(__file__)))
 
@@ -17,51 +16,47 @@ SITE_ROOT = dirname(DJANGO_ROOT)
 SITE_NAME = basename(DJANGO_ROOT)
 
 # Site domain name:
-SITE_DOMAIN_NAME = SITE_NAME+'.ru'
+SITE_DOMAIN_NAME = SITE_NAME + '.ru'
 
 # Add our project to our pythonpath, this way we don't need to type our project
 # name in our dotted import paths:
 path.append(DJANGO_ROOT)
-########## END PATH CONFIGURATION
+# END PATH CONFIGURATION
 
 
-########## DEBUG CONFIGURATION
+# DEBUG CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = True
+DEBUG = False
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
 TEMPLATE_DEBUG = DEBUG
-########## END DEBUG CONFIGURATION
+# END DEBUG CONFIGURATION
 
 
-########## MANAGER CONFIGURATION
+# MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ('Your Name', 'your_email@example.com'),
+    ('Asta', 'ksawie@gmail.com'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
-########## END MANAGER CONFIGURATION
+# END MANAGER CONFIGURATION
 
 
-########## DATABASE CONFIGURATION
+# DATABASE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-########## END DATABASE CONFIGURATION
-LOGGING_LOG_SQL=True
-LOGGING_OUTPUT_ENABLED=True
+# END DATABASE CONFIGURATION
+LOGGING_LOG_SQL = True
+LOGGING_OUTPUT_ENABLED = True
 
-########## GENERAL CONFIGURATION
+# GENERAL CONFIGURATION
 
 DATABASE_OPTIONS = {'charset': 'utf-8'}
 DEFAULT_CHARSET = 'utf-8'
 
-# Hosts/domain names that are valid for this site; required if DEBUG is False
-# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = [
 
-]
 
 PREPEND_WWW = False
 
@@ -86,27 +81,52 @@ USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
-########## END GENERAL CONFIGURATION
+# END GENERAL CONFIGURATION
 
 
-########## MEDIA CONFIGURATION
+# MEDIA CONFIGURATION
 
 MEDIA_URL = '/media/'
 
-########## END MEDIA CONFIGURATION
+# END MEDIA CONFIGURATION
 
 
 STATIC_URL = '/static/'
 
-# See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
+# See:
+# https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
 )
-########## END STATIC FILE CONFIGURATION
 
-########## TEMPLATE CONFIGURATION
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
+# STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+
+
+
+
+# PIPELINE_CSS = {
+#     'colors': {
+#         'source_filenames': (
+
+#        'css/bootstrap.min.css',
+#     'css/fonts/font-awesome/css/font-awesome.css',
+#     'vendor/owl-carousel/owl.carousel.css'
+
+#         ),
+#         'output_filename': 'css/MYDUMB.css',
+#         'variant': 'datauri',
+
+#     },
+# }
+
+# PIPELINE_CSS_COMPRESSOR = None
+# END STATIC FILE CONFIGURATION
+
+# TEMPLATE CONFIGURATION
+# See:
+# https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
@@ -116,6 +136,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
+    'main.context.write_context',
 
 )
 
@@ -129,31 +150,39 @@ TEMPLATE_LOADERS = (
 TEMPLATE_DIRS = (
     normpath(join(SITE_ROOT, 'templates')),
 )
-########## END TEMPLATE CONFIGURATION
+# END TEMPLATE CONFIGURATION
 
 
-########## MIDDLEWARE CONFIGURATION
+# MIDDLEWARE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#middleware-classes
 MIDDLEWARE_CLASSES = (
     # Default Django middleware.
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'htmlmin.middleware.HtmlMinifyMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
+    'pagination.middleware.PaginationMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
+    'htmlmin.middleware.MarkRequestMiddleware',
 )
-########## END MIDDLEWARE CONFIGURATION
+# END MIDDLEWARE CONFIGURATION
 
 
-########## URL CONFIGURATION
+# URL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
 ROOT_URLCONF = '%s.urls' % SITE_NAME
-########## END URL CONFIGURATION
+# END URL CONFIGURATION
+
+SOUTH_MIGRATION_MODULES = {
+    'taggit': 'taggit.south_migrations',
+}
 
 
-########## APP CONFIGURATION
+# APP CONFIGURATION
 DJANGO_APPS = (
     # Default Django apps:
     'django.contrib.auth',
@@ -173,22 +202,26 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (
 
-
-    # Database migration helpers:
-    'south',
+ 'inline_ordering','compressor', 'captcha', 'crispy_forms', 'autocomplete_light','pagination','django_extensions', 'south', 'mptt',  'django_mptt_admin', 'taggit', 'taggit_templatetags', 'embed_video', 'sitetree', 'django_ymap', 'solo', 'smuggler','ordered_model',
 )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
+    'main', 'stories', 'helpmap', 'radio', 'locations', 'help',
 
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
-########## END APP CONFIGURATION
 
 
-########## LOGGING CONFIGURATION
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+CAPTCHA_FONT_SIZE = 22
+# END APP CONFIGURATION
+
+
+# LOGGING CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -208,7 +241,12 @@ LOGGING = {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+
+        },
     },
     'loggers': {
         'django.request': {
@@ -216,12 +254,25 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+
+        'my': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
     }
 }
-########## END LOGGING CONFIGURATION
+
+
+SMUGGLER_EXCLUDE_LIST = ['auth',     'contenttypes',
+                         'sessions', 'admin', 'main']
+# END LOGGING CONFIGURATION
 
 #
-# ########## WSGI CONFIGURATION
-# # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
+# WSGI CONFIGURATION
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 # WSGI_APPLICATION = '%s.wsgi.application' % SITE_NAME
-# ########## END WSGI CONFIGURATION
+# END WSGI CONFIGURATION
+
+
+DEFAULT_FILE_STORAGE = 'main.utils.ASCIIFileSystemStorage'

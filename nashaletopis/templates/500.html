@@ -1,1 +1,54 @@
-<h1>Whoops!</h1>
+{% extends "base.html" %}
+
+    {% block main %}
+        
+
+
+            <!-- Page Heading -->
+            <section class="page-heading">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1>Ошибка 500</h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Page Heading / End -->
+
+            <!-- PAGE TITLE -->
+    <div class="container m-bot-15 clearfix">
+        <div class="sixteen columns">
+            <div class="page-title-container clearfix">
+               
+              
+            </div>  
+        </div>
+    </div>  
+
+    
+
+            <!-- Page Content -->
+            <section class="page-content">
+                <div class="container">
+{% block content %}
+
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 text-center">
+                            <h2 class="error-title">500</h2>
+                            <h3>Ошибка сервера. Что-то пошло не так. Но мы уже знаем об этом и очень скоро все починим. Благодарим за терпение.</h3>
+                            <p class="error-desc">Вы можете почитать <a href="/stories">истории</a> или послушать <a href="/radio">радиопередачи</a></p>
+                        </div>
+                    </div>
+
+                    <div class="spacer-lg"></div>
+
+                </div>
+            </section>
+{% endblock content %}
+
+            <!-- Page Content / End -->
+
+          {% endblock main %}
+
+

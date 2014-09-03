@@ -1,0 +1,89 @@
+{% extends "pagewithsidebar.html" %} {% block content %}
+ <div id="map" class="mbot30" style="width:100%; height:350px"></div>
+  {% load pagination_tags %}
+ {% autopaginate object_list 7 %}
+    {% for item in object_list %}
+   
+        <div class="box-holder mbot30">
+            <!-- Post (Standard Format) -->
+            <article class="entry entry__standard">
+                <header class="entry-header">
+                    <h2><a href="{{item.get_absolute_url}}">{{item.title}}</a>
+                    </h2>
+                    <div class="entry-meta">
+
+                      
+
+                            <span class="entry-comments">Адрес:
+<a href="/stories/letters">{{item.address}}</a></span>
+{% if item.email %}
+     <span class="entry-comments">Email:
+<a href="/stories/letters">{{item.email}}</a></span>
+{% endif %}
+                           {% if item.site %}
+                                <span class="entry-comments">Сайт:
+<a href="/stories/letters">{{item.site}}</a></span>
+                           {% endif %}
+                           
+
+                    </div>
+                </header>
+
+                <div class="excerpt">
+                    {{item.text|safe}}
+                </div>
+                <footer class="entry-footer">
+                    <h3><i class="fa fa-phone-square"></i>{{item.phone}}</h3>
+                </footer>
+            </article>
+            <!-- Post (Standard Format) / End -->
+        </div>
+   
+    {% endfor %}
+{% paginate %}
+{% endblock content %} {% block sidebar %}  {% include "categories.html" %} 
+
+ <div class="widget_categories widget widget__sidebar">
+                                <h3 class="widget-title">По регионам</h3>
+                                <div class="widget-content">
+                                    <ul id="regionsmenu">
+                                    {% load mptt_tags %}
+                                        {% recursetree locations %}
+
+                                            
+              
+                {% if node.l_count %}                                                    
+                                                                                                             
+        <li>
+         <a href="/map/helpgiven/location/{{node.id}}">{{ node.title }}</a> ({{node.l_count}})
+            {% if not node.is_leaf_node %}
+                <ul class="children">
+                    {{ children }}
+                </ul>
+            {% endif %}
+        </li>
+       {% endif %}   
+    {% endrecursetree %}
+                                   
+                                        {# <li><a href="#">{{period.name}}</a> (3)</li> #}
+                                    </ul>
+                                </div>
+                            </div>        
+ <div class="widget_categories widget widget__sidebar">
+                                <h3 class="widget-title">Карта помощи</h3>
+                                <div class="widget-content">
+                                    <ul>
+                                    <li><a href="/map/helpneeded">Им нужна помощь</a></li>
+                                    <li><a href="/map/helpgiven">Они помогают</a></li>
+                                    </ul>
+                                </div>
+                            </div>    
+  {% endblock sidebar %}
+{% block customjs %}
+{% if locationpk %}
+   {% include "mapregionjs.html" %}
+   {% else %}
+   {% include "mapjs.html" %} 
+{% endif %}
+
+{% endblock customjs %}

@@ -1,0 +1,32 @@
+{% extends "pagewithsidebar.html" %}
+
+{% block content %}
+    
+
+    <div id="map"></div>
+
+
+{% endblock content %}
+
+{% block customjs %}
+      <script src="http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
+    <script type="text/javascript">
+         window.onload = function () {
+             ymaps.ready(function () {
+                 var myMap = new ymaps.Map('map', {
+                     center: [55.76, 37.64],
+                     zoom: 8
+                 });
+          //После того, как данные YmapsMl-файла загрузятся, вызывается callback-функция 
+                ymaps.geoXml.load("/maps/doc/ymapsml/1.x/examples/xml/intro.xml")
+                            .then(function (res) {
+          //Добавляем коллекцию геообъектов на карту  
+                                 myMap.geoObjects.add(res.geoObjects);
+                             }, function (error){   // Вызывается в случае неудачной загрузки YMapsMl-файла
+                alert('Ошибка: ' + error);
+            });
+        });
+         }     
+    </script>
+{% endblock customjs %}
+

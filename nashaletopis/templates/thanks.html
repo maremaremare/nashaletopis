@@ -1,0 +1,15 @@
+{% extends "pagewithsidebar.html" %}
+{% block content %}
+<h3>Большое спасибо!</h3>
+<p> История была отправлена нашей команде. Мы свяжемся с Вами, как только сможем.</p>
+{% endblock content %}
+
+{% block sidebar %}
+{% load mptt_tags %} 
+{% if periods %}
+    {% include "periods.html" %}
+{% endif %}
+
+
+{% include "regions.html" %}                      
+{% endblock sidebar %}

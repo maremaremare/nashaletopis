@@ -1,0 +1,53 @@
+{% extends "pagewithsidebar.html" %} {% block content %}
+<ul class="masonry-feed row">
+  {% load pagination_tags %}
+ {% autopaginate object_list 12 %}
+    {% for program in object_list %}
+    <li class="col-md-6 masonry-item">
+        <div class="box-holder">
+            <!-- Post (Standard Format) -->
+            <article class="entry entry__standard">
+                <header class="entry-header">
+                    <h2><a href="{{program.get_absolute_url}}">{{program.date}}</a>
+                    </h2>
+                    <div class="entry-meta">
+
+                       
+
+                        Категория: <a href="{{program.category.get_absolute_url}}">{{program.category.title}}</a>
+                    
+                        {% if program.story_set.all|length > 1 or program.participants %}
+                             <br>    
+             Участники: {% for person in program.story_set.all %}
+                 <a href="{{person.get_absolute_url}}">{{person.name}}</a>{% if not forloop.last %},{% endif %}
+             {% endfor %}
+             {% if program.participants %}, {{program.participants}}
+             {% endif %}
+                         {% endif %} 
+
+
+                    </div>
+                </header>
+
+                <div class="excerpt">
+                    {{program.text|safe|truncatewords_html:80}}
+                </div>
+
+
+                                <figure class="alignleft audio-holder audiolist">
+                                    <audio controls="" preload="none" width="640" height="30" src="{{program.audio.url}}"></audio>
+                                   
+                                </figure>
+
+
+                <div>
+                    <a href="{{program.audio.url}}" download = "{{program.audio.url}}" class="btn btn-sm btn-primary btn-downloadradio"><i class="fa fa-download"></i> Скачать</a>
+              </div>
+            </article>
+            <!-- Post (Standard Format) / End -->
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% paginate %}
+{% endblock content %} {% block sidebar %} {% include "categories.html" %} {% include "radioannounces.html" %} {% endblock sidebar %}

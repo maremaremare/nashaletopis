@@ -1,0 +1,75 @@
+{% extends "pagewithsidebar.html" %} {% block content %}
+<ul class="masonry-feed row">
+  {% load pagination_tags %}
+ {% autopaginate object_list 4 %}
+
+    {% for story in object_list %}
+    <li class="col-md-6 masonry-item">
+        <div class="box-holder {% if story.is_letter %}letter{% endif %}">
+            <!-- Post (Standard Format) -->
+            <article class="entry entry__standard">
+                <header class="entry-header">
+                    <h2><a href="/stories{% if not periods %}/active{% endif %}{% if urlconstruct %}/{{urlconstruct}}/{{slug}}{{locationpk}}{% endif %}/read/{{story.id}}">{{story.name}}</a>
+                    </h2>
+                    <div class="entry-meta">
+
+                        {% if periods %}
+
+
+                        <span class="entry-comments">
+                            {% for location in story.location.all %}
+                            <a href="/stories/{% if not periods %}active/{% endif %}location/{{location.id}}">{{location.title}} ({{location.parent.title}})</a>{% if not forloop.last %},{% endif %} {% endfor %}
+                        </span>
+
+                        
+                        <span class="entry-comments">
+
+{% for  p in story.period.all %}
+     <a href="/stories/period/{{story.period.slug}}">{{p.name}}</a>{% if not forloop.last %},{% endif %}
+{% endfor %}
+
+                       
+                        </span>
+                        {% else %}
+                        <span class="entry-comments">
+
+                            <a href="/stories/active/location/{{story.location.id}}">{{story.location.title}}</a>
+
+                        </span>
+
+
+
+                        {% endif %}
+{% if story.is_letter %}
+                            <span class="entry-comments">
+<a href="/stories/letters">Письмо в редакцию</a></span>
+{% endif %}
+                    </div>
+                </header>
+                {% if story.is_photo_shown %}
+                    <figure class="alignleft">
+                    <a href="#">
+                        <img src="{% with story.photos.all|first as coverphoto  %}
+  {{coverphoto.storylist_thumbnail.url}}
+{% endwith %}" alt="">
+                    </a>
+                </figure>
+                {% endif %}
+                
+                <div class="excerpt">
+                    {{story.text|safe|truncatewords_html:80}}
+                </div>
+                <footer class="entry-footer">
+                    <a href="{{story.get_absolute_url}}" class="btn btn-primary">Читать дальше</a>
+                    {% if story.radioprogram %}
+                        <a href="{{story.radioprogram.get_absolute_url}}" class="btn btn-default">Перейти к радиопередаче</a>
+                    {% endif %}
+                </footer>
+            </article>
+            <!-- Post (Standard Format) / End -->
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% paginate %}
+{% endblock content %} {% block sidebar %} {% if periods %} {% include "periods.html" %} {% endif %} {% include "regions.html" %} {% include "tags.html" %}{% endblock sidebar %}

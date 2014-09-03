@@ -1,0 +1,74 @@
+{% extends "pagewithsidebar.html" %} {% block content %}
+ <div id="map" class="mbot30" style="width:100%; height:350px"></div>
+  {% load pagination_tags %}
+
+   
+        <div class="box-holder mbot30">
+            <!-- Post (Standard Format) -->
+            <article class="entry entry__standard">
+                <header class="entry-header">
+                    <h2><a href="{{object.get_absolute_url}}">{{object.title}}</a>
+                    </h2>
+                    <div class="entry-meta">
+
+                      
+
+                            <span class="entry-comments">Адрес:
+<a href="/stories/letters">{{object.address}}</a></span>
+{% if object.email %}
+     <span class="entry-comments">Email:
+<a href="/stories/letters">{{object.email}}</a></span>
+{% endif %}
+                           {% if object.site %}
+                                <span class="entry-comments">Сайт:
+<a href="/stories/letters">{{object.site}}</a></span>
+                           {% endif %}
+                           
+
+                    </div>
+                </header>
+
+                <div class="excerpt">
+                    {{object.text|safe}}
+                </div>
+                <footer class="entry-footer">
+                    <h3><i class="fa fa-phone-square"></i>{{object.phone}}</h3>
+                </footer>
+            </article>
+            <!-- Post (Standard Format) / End -->
+        </div>
+   
+   
+{% endblock content %} {% block sidebar %}  {% include "categories.html" %} 
+
+ <div class="widget_categories widget widget__sidebar">
+                                <h3 class="widget-title">По регионам</h3>
+                                <div class="widget-content">
+                                    <ul id="regionsmenu">
+                                    {% load mptt_tags %}
+                                        {% recursetree locations %}
+
+                                            
+              
+                {% if node.l_count %}                                                    
+                                                                                                             
+        <li>
+         <a href="/map/helpgiven/location/{{node.id}}">{{ node.title }}</a> ({{node.l_count}})
+            {% if not node.is_leaf_node %}
+                <ul class="children">
+                    {{ children }}
+                </ul>
+            {% endif %}
+        </li>
+       {% endif %}   
+    {% endrecursetree %}
+                                   
+                                        {# <li><a href="#">{{period.name}}</a> (3)</li> #}
+                                    </ul>
+                                </div>
+                            </div>        
+
+  {% endblock sidebar %}
+{% block customjs %}
+{% include "mapjs.html" %}
+{% endblock customjs %}

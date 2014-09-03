@@ -1,0 +1,26 @@
+ <div class="widget_categories widget widget__sidebar">
+                                <h3 class="widget-title">По регионам</h3>
+                                <div class="widget-content">
+                                    <ul id="regionsmenu">
+                                    {% load mptt_tags %}
+                                        {% recursetree locations %}
+
+                                            
+              
+                {% if node.l_count %}                                                    
+                                                                                                             
+        <li>
+         <a href="location/{{node.id}}">{{ node.title }}</a> ({{node.l_count}})
+            {% if not node.is_leaf_node %}
+                <ul class="children">
+                    {{ children }}
+                </ul>
+            {% endif %}
+        </li>
+       {% endif %}   
+    {% endrecursetree %}
+                                   
+                                        {# <li><a href="#">{{period.name}}</a> (3)</li> #}
+                                    </ul>
+                                </div>
+                            </div>        

@@ -1,0 +1,25 @@
+{% extends "pagewide.html" %}
+{% block content %}
+
+{% for item in object_list %}
+	
+
+	<div class="call-to-action">
+						<div class="cta-txt">
+						<div class="icon-box circled icon-box-animated" style="float:left; margin-bottom:0">
+								<div class="icon">
+									<i class="fa fa-{{item.icon}}"></i>
+								</div>
+					
+							</div>
+							<h2><a href="{{item.get_absolute_url}}">{{item.title}}</a></h2>
+							<p>{{item.description}}</p>
+
+						</div>
+						<div class="cta-btn">
+							<a href="{{item.get_absolute_url}}" class="btn btn-primary">Читать дальше</a>
+						</div>
+					</div>
+
+	{% endfor %}
+{% endblock content %}

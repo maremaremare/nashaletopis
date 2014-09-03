@@ -12,9 +12,9 @@ INSTALLED_APPS += ('gunicorn',)
 # HOST CONFIGURATION
 # See:
 # https://docs.djangoproject.com/en/1.5/releases/1.5/#allowed-hosts-required-in-production
-ALLOWED_HOSTS = [SITE_DOMAIN_NAME]
+ALLOWED_HOSTS = ['nashaletopis.ru']
 # END HOST CONFIGURATION
-
+COMPRESS_ENABLED = True
 # EMAIL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -33,8 +33,9 @@ EMAIL_SUBJECT_PREFIX = '[%s] ' % SITE_NAME
 STATICFILES_DIRS = (
     '/home/maremare/domains/' + SITE_DOMAIN_NAME + '/static/',
 )
-STATIC_ROOT = '/home/maremare/domains/' + SITE_DOMAIN_NAME + '/static/'
+STATIC_ROOT = '/home/maremare/domains/' + SITE_DOMAIN_NAME + '/staticroot/'
 MEDIA_ROOT = '/home/maremare/domains/' + SITE_DOMAIN_NAME + '/media/'
+
 # DATABASE CONFIGURATION
 DATABASES = {
     'default': {
@@ -51,5 +52,11 @@ DATABASES = {
 
 # CACHE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
-#CACHES = {}
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+        'TIMEOUT': 300
+    }
+}
 # END CACHE CONFIGURATION
